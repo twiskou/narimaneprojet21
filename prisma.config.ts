@@ -3,7 +3,6 @@ import { createClient } from "@libsql/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 export default defineConfig({
-  earlyAccess: true,
   schema: "prisma/schema.prisma",
   migrate: {
     async adapter() {
