@@ -1,18 +1,20 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { createClient } from "@libsql/client";
 import bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
-import path from "path";
 dotenv.config();
 
-const dbPath = path.resolve(process.cwd(), "dev.db");
-const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
-const prisma = new PrismaClient({ adapter } as never);
+const libsql = createClient({
+  url: process.env.TURSO_DATABASE_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN!,
+});
+const adapter = new PrismaLibSQL(libsql);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log("🌱 Nettoyage de la base de données NARP-SMART...");
 
-  // Suppression de toutes les données (l'ordre est important pour éviter les problèmes de clés étrangères)
   await prisma.sentiment.deleteMany();
   await prisma.aIAnalysis.deleteMany();
   await prisma.mention.deleteMany();
@@ -21,10 +23,8 @@ async function main() {
   await prisma.user.deleteMany();
 
   console.log("🧹 Base de données vidée.");
-
   console.log("👤 Création des nouveaux comptes de test...");
 
-  // 1. Admin
   const adminHash = await bcrypt.hash("admin1234", 12);
   await prisma.user.create({
     data: {
@@ -36,7 +36,6 @@ async function main() {
     },
   });
 
-  // 2. Analyst
   const analystHash = await bcrypt.hash("analyst1234", 12);
   await prisma.user.create({
     data: {
@@ -48,7 +47,6 @@ async function main() {
     },
   });
 
-  // 3. Viewer
   const viewerHash = await bcrypt.hash("viewer1234", 12);
   await prisma.user.create({
     data: {
