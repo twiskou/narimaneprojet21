@@ -1,6 +1,6 @@
 import { defineConfig } from "prisma/config";
 import { createClient } from "@libsql/client";
-import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 export default defineConfig({
   earlyAccess: true,
@@ -11,7 +11,7 @@ export default defineConfig({
         url: process.env.TURSO_DATABASE_URL!,
         authToken: process.env.TURSO_AUTH_TOKEN!,
       });
-      return new PrismaLibSQL(libsql);
+      return new PrismaLibSql(libsql);
     },
   },
 });
