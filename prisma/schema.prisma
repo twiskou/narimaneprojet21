@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         Role      @default(ANALYST)
+  orgName      String?
+  createdAt    DateTime  @default(now())
+  mentions     Mention[]
+  alerts       Alert[]
+  missions     Mission[]
+  aiAnalyses   AIAnalysis[]
+}
+
+enum Role {
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+model Mention {
+  id          String    @id @default(cuid())
+  content     String
+  source      Source    @default(MANUAL)
+  language    Language  @default(EN)
+  authorName  String?
+  url         String?
+  publishedAt DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  sentiment   Sentiment?
+  aiAnalysis  AIAnalysis?
+}
+
+enum Source {
+  TWITTER
+  NEWS
+  MANUAL
+}
+
+enum Language {
+  EN
+  FR
+  AR
+}
+
+model Sentiment {
+  id         String         @id @default(cuid())
+  label      SentimentLabel
+  score      Float
+  analyzedAt DateTime       @default(now())
+  mentionId  String         @unique
+  mention    Mention        @relation(fields: [mentionId], references: [id], onDelete: Cascade)
+}
+
+enum SentimentLabel {
+  POSITIVE
+  NEGATIVE
+  NEUTRAL
+}
+
+model Alert {
+  id          String    @id @default(cuid())
+  type        AlertType
+  message     String
+  severity    String    @default("MEDIUM")
+  isRead      Boolean   @default(false)
+  triggeredAt DateTime  @default(now())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+enum AlertType {
+  NEGATIVE_SPIKE
+  VOLUME_SURGE
+  REPUTATION_DROP
+}
+
+model Mission {
+  id            String           @id @default(cuid())
+  title         String
+  description   String?
+  authorNote    String?
+  status        MissionStatus    @default(ACTIVE)
+  authorId      String
+  user          User             @relation(fields: [authorId], references: [id])
+  createdAt     DateTime         @default(now())
+  targetProfile TargetProfile?
+  activities    MissionActivity[]
+}
+
+enum MissionStatus {
+  ACTIVE
+  DRAFT
+  COMPLETED
+  CANCELLED
+}
+
+model TargetProfile {
+  id           String   @id @default(cuid())
+  fullName     String
+  role         String?
+  organization String?
+  fileUrl      String?
+  fileType     String?
+  notes        String?
+  missionId    String   @unique
+  mission      Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
+}
+
+model MissionActivity {
+  id          String   @id @default(cuid())
+  type        String
+  label       String
+  description String?
+  missionId   String
+  mission     Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
+}
+
+model AIAnalysis {
+  id          String         @id @default(cuid())
+  summary     String
+  sentiment   SentimentLabel
+  score       Float
+  crisisRisk  Float
+  mentionId   String         @unique
+  mention     Mention        @relation(fields: [mentionId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  createdAt   DateTime       @default(now())
+}
