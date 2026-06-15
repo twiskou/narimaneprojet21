@@ -8,9 +8,8 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  // This URL is never used at runtime (the libsql adapter takes over),
-  // but Prisma requires the field to exist for codegen.
-  url      = env("DATABASE_URL")
+  // In Prisma 7, url is NOT allowed here — connection is handled
+  // by the libsql adapter passed to PrismaClient() in src/lib/prisma.ts
 }
 
 
