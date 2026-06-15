@@ -27,8 +27,7 @@ function buildPrismaClient(): PrismaClient {
     );
   }
 
-  const libsql = createClient({ url, authToken: authToken ?? "" });
-  const adapter = new PrismaLibSql(libsql);
+  const adapter = new PrismaLibSql({ url, authToken: authToken ?? "" });
   return new PrismaClient({ adapter });
 }
 

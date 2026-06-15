@@ -4,12 +4,12 @@ import { createClient } from "@libsql/client";
 import bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
 dotenv.config();
+process.env.DATABASE_URL = "file:./dev.db";
 
-const libsql = createClient({
+const adapter = new PrismaLibSql({
   url: process.env.TURSO_DATABASE_URL!,
   authToken: process.env.TURSO_AUTH_TOKEN!,
 });
-const adapter = new PrismaLibSql(libsql);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
@@ -21,13 +21,13 @@ async function main() {
   await prisma.user.deleteMany();
 
   const adminHash = await bcrypt.hash("admin1234", 12);
-  await prisma.user.create({ data: { email: "admin@narp-smart.com", name: "Administrateur", passwordHash: adminHash, role: "ADMIN", orgName: "NARP-SMART" } });
+  await prisma.user.create({ data: { email: "admin@gmail.com", name: "Admin", passwordHash: adminHash, role: "ADMIN", orgName: "NARP-SMART" } });
 
   const analystHash = await bcrypt.hash("analyst1234", 12);
-  await prisma.user.create({ data: { email: "analyst@narp-smart.com", name: "Analyste", passwordHash: analystHash, role: "ANALYST", orgName: "NARP-SMART" } });
+  await prisma.user.create({ data: { email: "user1@gmail.com", name: "Analyste", passwordHash: analystHash, role: "ANALYST", orgName: "NARP-SMART" } });
 
   const viewerHash = await bcrypt.hash("viewer1234", 12);
-  await prisma.user.create({ data: { email: "viewer@narp-smart.com", name: "Observateur", passwordHash: viewerHash, role: "VIEWER", orgName: "NARP-SMART" } });
+  await prisma.user.create({ data: { email: "user2@gmail.com", name: "Observateur", passwordHash: viewerHash, role: "VIEWER", orgName: "NARP-SMART" } });
 
   console.log("🎉 Seed terminé !");
 }
