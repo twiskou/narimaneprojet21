@@ -5,8 +5,9 @@ import Link from "next/link";
 import { AuthNavbar, AuthFooter } from "@/components/AuthLayout";
 import { useLang } from "@/context/LangContext";
 import { translations } from "@/lib/translations";
+import SubscriptionStep from "@/components/SubscriptionStep";
 
-type Step = 1 | 2;
+type Step = 1 | 2 | 3;
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -42,12 +43,17 @@ export default function RegisterPage() {
     e.preventDefault();
     if (!isStep2Valid) return;
     setError("");
+    setStep(3);
+  }
+
+  async function handleFinalSubmit(planId: string, isAnnual: boolean) {
+    setError("");
     setLoading(true);
     try {
       const res  = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, orgName: form.orgName || selectedRole }),
+        body: JSON.stringify({ ...form, orgName: form.orgName || selectedRole, planId, isAnnual }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || "حدث خطأ أثناء التسجيل."); setLoading(false); return; }
@@ -100,7 +106,7 @@ export default function RegisterPage() {
 
           {/* Progress bar */}
           <div style={{ display: "flex", gap: 8, marginBottom: 28 }}>
-            {[1, 2].map(s => (
+            {[1, 2, 3].map(s => (
               <div key={s} style={{
                 flex: 1, height: 4, borderRadius: 100,
                 background: s <= step ? "linear-gradient(90deg, #2d8bba, #22c778)" : "rgba(255,255,255,0.08)",
@@ -257,27 +263,41 @@ export default function RegisterPage() {
                   </button>
                   <button
                     type="submit"
-                    disabled={loading || !isStep2Valid}
+                    disabled={!isStep2Valid}
                     style={{
                       flex: 1, padding: "14px 20px", borderRadius: 12, border: "none",
-                      background: loading || !isStep2Valid ? "rgba(255,255,255,0.05)" : "linear-gradient(135deg, #2d8bba, #22c778)",
-                      color: loading || !isStep2Valid ? "var(--text-muted)" : "#fff",
+                      background: !isStep2Valid ? "rgba(255,255,255,0.05)" : "linear-gradient(135deg, #2d8bba, #22c778)",
+                      color: !isStep2Valid ? "var(--text-muted)" : "#fff",
                       fontSize: 16, fontWeight: 700,
-                      cursor: loading || !isStep2Valid ? "not-allowed" : "pointer",
+                      cursor: !isStep2Valid ? "not-allowed" : "pointer",
                       transition: "all 0.3s ease",
-                      boxShadow: !loading && isStep2Valid ? "0 8px 30px rgba(34,199,120,0.3)" : "none",
+                      boxShadow: isStep2Valid ? "0 8px 30px rgba(34,199,120,0.3)" : "none",
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
                     }}
                   >
-                    {loading ? (
-                      <>
-                        <span style={{ width: 18, height: 18, border: "2px solid rgba(255,255,255,0.3)", borderTop: "2px solid #fff", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
-                        {t.authBtnLoading}
-                      </>
-                    ) : t.authBtnRegister}
+                    {t.authBtnContinue} {dir==="rtl"?"←":"→"}
                   </button>
                 </div>
               </form>
+            )}
+
+            {/* STEP 3 - Subscription */}
+            {!success && step === 3 && (
+              <div style={{ margin: "-36px" }}>
+                <div style={{ padding: "36px", position: "relative" }}>
+                   {loading && (
+                      <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.5)", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 20, backdropFilter: "blur(2px)" }}>
+                         <span style={{ width: 40, height: 40, border: "4px solid rgba(0,191,165,0.3)", borderTop: "4px solid #00BFA5", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
+                      </div>
+                   )}
+                   <SubscriptionStep
+                      selectedRoleLabel={ROLES.find(r => r.id === selectedRole)?.label || ""}
+                      isInstitution={selectedRole === "manager"}
+                      onBack={() => setStep(2)}
+                      onContinue={handleFinalSubmit}
+                   />
+                </div>
+              </div>
             )}
           </div>
 
