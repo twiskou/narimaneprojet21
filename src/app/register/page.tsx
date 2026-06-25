@@ -283,20 +283,19 @@ export default function RegisterPage() {
 
             {/* STEP 3 - Subscription */}
             {!success && step === 3 && (
-              <div style={{ margin: "-36px" }}>
-                <div style={{ padding: "36px", position: "relative" }}>
-                   {loading && (
-                      <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.5)", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 20, backdropFilter: "blur(2px)" }}>
-                         <span style={{ width: 40, height: 40, border: "4px solid rgba(0,191,165,0.3)", borderTop: "4px solid #00BFA5", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
-                      </div>
-                   )}
-                   <SubscriptionStep
-                      selectedRoleLabel={ROLES.find(r => r.id === selectedRole)?.label || ""}
-                      isInstitution={selectedRole === "manager"}
-                      onBack={() => setStep(2)}
-                      onContinue={handleFinalSubmit}
-                   />
-                </div>
+              <div style={{ position: "relative" }}>
+                {loading && (
+                  <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.7)", zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 20, backdropFilter: "blur(4px)" }}>
+                    <span style={{ width: 44, height: 44, border: "4px solid rgba(34,199,120,0.2)", borderTop: "4px solid #22c778", borderRadius: "50%", display: "inline-block", animation: "spin 0.8s linear infinite" }} />
+                  </div>
+                )}
+                <SubscriptionStep
+                  selectedRoleId={selectedRole}
+                  selectedRoleLabel={ROLES.find(r => r.id === selectedRole)?.label || ""}
+                  selectedRoleIcon={ROLES.find(r => r.id === selectedRole)?.icon || ""}
+                  onBack={() => setStep(2)}
+                  onContinue={handleFinalSubmit}
+                />
               </div>
             )}
           </div>
