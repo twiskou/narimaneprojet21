@@ -106,6 +106,53 @@ export const translations = {
     authPwdStrength: ["", "قصير جداً", "ضعيف", "جيد", "ممتاز"],
     authDemo: "تجربة",
 
+    // Subscription Step
+    subTitle: "اختر الباقة المناسبة لك",
+    subSubtitle: "عروض مخصصة لك كـ",
+    subSubtitleEnd: "— يمكنك الترقية في أي وقت",
+    subSelectedProfile: "البروفايل المختار",
+    subChange: "تغيير",
+    subMonthly: "شهري",
+    subAnnual: "سنوي",
+    subSave: "وفر 17%",
+    subAnnualNote: "💰 دفع سنوي واحد أرخص",
+    subPopular: "الأكثر شيوعاً",
+    subSelected: "مختارة",
+    subSelectBtn: "اختر هذه الباقة",
+    subSelectedBtn: "الباقة المختارة",
+    subPerYear: "سنوياً",
+    subPerMonth: "شهرياً",
+    subEquiv: "أي",
+    subEquivEnd: "دج / شهرياً",
+    subFree: "مجاني",
+    subBack: "رجوع",
+    subFinish: "إنهاء التسجيل وإنشاء الحساب",
+    subChosenPlan: "الباقة المختارة:",
+    subCurrency: "دج",
+
+    subPlans: {
+      student: [
+        { id: "free", name: "مجاني", subtitle: "للبدء والاستكشاف", monthlyPrice: 0, annualPrice: 0, color: "#6b7280", features: ["تحليل المشاعر الأساسي", "متابعة 10 إشارات شهرياً", "تصدير تقرير واحد / شهر"], highlighted: false },
+        { id: "student_pro", name: "طالب Pro", subtitle: "الأنسب لبحثك الأكاديمي", monthlyPrice: 833, annualPrice: 10000, color: "#2d8bba", features: ["تحليل غير محدود للمشاعر", "متابعة 100 إشارة شهرياً", "تصدير تقارير PDF غير محدود", "دعم فني عبر البريد الإلكتروني"], highlighted: true },
+        { id: "student_expert", name: "طالب خبير", subtitle: "لأبحاث الدكتوراه والتحكيم", monthlyPrice: 2083, annualPrice: 25000, color: "#22c778", features: ["كل مزايا الباقة Pro", "وصول لقواعد بيانات الإعلام الجزائري", "تقارير مقارنة دورية", "دعم فني مخصص 24/7"], highlighted: false },
+      ],
+      professor: [
+        { id: "prof_basic", name: "أساسية", subtitle: "لمتابعة الأبحاث والنشر", monthlyPrice: 833, annualPrice: 10000, color: "#6b7280", features: ["تحليل المشاعر الأساسي", "متابعة 50 إشارة شهرياً", "تصدير 5 تقارير / شهر"], highlighted: false },
+        { id: "prof_pro", name: "محترف", subtitle: "للباحثين والأساتذة النشطين", monthlyPrice: 2083, annualPrice: 25000, color: "#2d8bba", features: ["تحليل متقدم بالذكاء الاصطناعي", "متابعة غير محدودة للإشارات", "لوحة تحكم بحثية مخصصة", "تصدير بصيغ متعددة"], highlighted: true },
+        { id: "prof_expert", name: "خبير", subtitle: "للمختبرات والمجموعات البحثية", monthlyPrice: 4167, annualPrice: 50000, color: "#22c778", features: ["كل مزايا الباقة المحترف", "حسابات متعددة للفريق (حتى 5)", "تحليل مقارن للمؤسسات الأكاديمية", "API للتكامل مع أدوات البحث"], highlighted: false },
+      ],
+      manager: [
+        { id: "inst_basic", name: "الأساسية", subtitle: "للمؤسسات الصغيرة", monthlyPrice: 8333, annualPrice: 100000, color: "#6b7280", features: ["رصد السمعة عبر منصتين", "تقارير أداء شهرية", "حسابات الفريق (حتى 3)", "تنبيهات أساسية"], highlighted: false },
+        { id: "inst_advanced", name: "المتقدمة", subtitle: "للمؤسسات المتوسطة", monthlyPrice: 12500, annualPrice: 150000, color: "#2d8bba", features: ["رصد السمعة على جميع المنصات", "تقارير أداء أسبوعية وفورية", "حسابات الفريق (حتى 10)", "تنبيهات الأزمات في الوقت الفعلي", "لوحة تحكم المؤسسة"], highlighted: true },
+        { id: "inst_pro", name: "الاحترافية", subtitle: "للمؤسسات الكبرى والحكومية", monthlyPrice: 16667, annualPrice: 200000, color: "#22c778", features: ["إدارة الأزمات المتكاملة", "ذكاء اصطناعي مخصص للمؤسسة", "حسابات غير محدودة", "تقارير استراتيجية يومية", "مدير حساب مخصص"], highlighted: false },
+      ],
+      pr: [
+        { id: "pr_basic", name: "مسؤول مبتدئ", subtitle: "لإدارة حملة واحدة", monthlyPrice: 833, annualPrice: 10000, color: "#6b7280", features: ["متابعة حملة واحدة", "تحليل أساسي للمشاعر", "تصدير 5 تقارير / شهر"], highlighted: false },
+        { id: "pr_pro", name: "مسؤول محترف", subtitle: "للعلاقات العامة اليومية", monthlyPrice: 2083, annualPrice: 25000, color: "#2d8bba", features: ["متابعة حملات متعددة (حتى 5)", "تحليل متقدم وتنبيهات فورية", "تقارير يومية جاهزة للمشاركة", "لوحة تحكم مخصصة للعلاقات العامة"], highlighted: true },
+        { id: "pr_expert", name: "خبير اتصال", subtitle: "للإدارة الشاملة للسمعة", monthlyPrice: 4167, annualPrice: 50000, color: "#22c778", features: ["حملات غير محدودة", "رصد شامل للإعلام الجزائري", "تحليل المنافسين والجهات المنافسة", "دعم استراتيجي مخصص"], highlighted: false },
+      ],
+    },
+
     // Dashboard Common
     errLoadData: "حدث خطأ أثناء تحميل البيانات.",
     noEnoughData: "لا توجد بيانات كافية",
@@ -372,6 +419,53 @@ export const translations = {
     authPwdStrength: ["", "Trop court", "Faible", "Bon", "Excellent"],
     authDemo: "Démo",
 
+    // Subscription Step
+    subTitle: "Choisissez votre formule",
+    subSubtitle: "Des offres personnalisées pour vous en tant que",
+    subSubtitleEnd: "— évoluez à tout moment",
+    subSelectedProfile: "Profil sélectionné",
+    subChange: "Changer",
+    subMonthly: "Mensuel",
+    subAnnual: "Annuel",
+    subSave: "Économisez 17%",
+    subAnnualNote: "💰 Paiement annuel plus avantageux",
+    subPopular: "Le plus populaire",
+    subSelected: "Sélectionné",
+    subSelectBtn: "Choisir ce plan",
+    subSelectedBtn: "Plan sélectionné",
+    subPerYear: "/ an",
+    subPerMonth: "/ mois",
+    subEquiv: "Soit",
+    subEquivEnd: "DZD / mois",
+    subFree: "Gratuit",
+    subBack: "Retour",
+    subFinish: "Finaliser l'inscription",
+    subChosenPlan: "Plan choisi :",
+    subCurrency: "DZD",
+
+    subPlans: {
+      student: [
+        { id: "free", name: "Gratuit", subtitle: "Pour commencer", monthlyPrice: 0, annualPrice: 0, color: "#6b7280", features: ["Analyse de sentiments basique", "10 mentions / mois", "1 rapport / mois"], highlighted: false },
+        { id: "student_pro", name: "Étudiant Pro", subtitle: "Idéal pour votre recherche", monthlyPrice: 833, annualPrice: 10000, color: "#2d8bba", features: ["Analyse de sentiments illimitée", "100 mentions / mois", "Rapports PDF illimités", "Support par email"], highlighted: true },
+        { id: "student_expert", name: "Étudiant Expert", subtitle: "Thèse & recherche avancée", monthlyPrice: 2083, annualPrice: 25000, color: "#22c778", features: ["Toutes les fonctionnalités Pro", "Accès aux médias algériens", "Rapports comparatifs", "Support dédié 24/7"], highlighted: false },
+      ],
+      professor: [
+        { id: "prof_basic", name: "Basique", subtitle: "Recherche & publications", monthlyPrice: 833, annualPrice: 10000, color: "#6b7280", features: ["Analyse basique", "50 mentions / mois", "5 rapports / mois"], highlighted: false },
+        { id: "prof_pro", name: "Professionnel", subtitle: "Pour chercheurs actifs", monthlyPrice: 2083, annualPrice: 25000, color: "#2d8bba", features: ["IA d'analyse avancée", "Mentions illimitées", "Tableau de bord recherche", "Export PDF & Excel"], highlighted: true },
+        { id: "prof_expert", name: "Expert", subtitle: "Laboratoires & groupes", monthlyPrice: 4167, annualPrice: 50000, color: "#22c778", features: ["Tout le plan Pro", "5 comptes équipe", "Analyse comparative inter-institutions", "Intégration API"], highlighted: false },
+      ],
+      manager: [
+        { id: "inst_basic", name: "Basique", subtitle: "Petites institutions", monthlyPrice: 8333, annualPrice: 100000, color: "#6b7280", features: ["Réputation sur 2 plateformes", "Rapports mensuels", "3 comptes équipe", "Alertes basiques"], highlighted: false },
+        { id: "inst_advanced", name: "Avancé", subtitle: "Institutions moyennes", monthlyPrice: 12500, annualPrice: 150000, color: "#2d8bba", features: ["Toutes les plateformes", "Rapports hebdomadaires", "10 comptes équipe", "Alertes de crise temps réel", "Tableau de bord institution"], highlighted: true },
+        { id: "inst_pro", name: "Professionnel", subtitle: "Grandes institutions", monthlyPrice: 16667, annualPrice: 200000, color: "#22c778", features: ["Gestion de crise intégrée", "IA personnalisée", "Comptes illimités", "Rapports quotidiens", "Account manager dédié"], highlighted: false },
+      ],
+      pr: [
+        { id: "pr_basic", name: "Débutant", subtitle: "Gérer une campagne", monthlyPrice: 833, annualPrice: 10000, color: "#6b7280", features: ["1 campagne", "Analyse basique", "5 rapports / mois"], highlighted: false },
+        { id: "pr_pro", name: "Professionnel RP", subtitle: "Relations publiques au quotidien", monthlyPrice: 2083, annualPrice: 25000, color: "#2d8bba", features: ["5 campagnes", "Analyse avancée & alertes", "Rapports quotidiens", "Tableau de bord RP"], highlighted: true },
+        { id: "pr_expert", name: "Expert Communication", subtitle: "Gestion complète de la réputation", monthlyPrice: 4167, annualPrice: 50000, color: "#22c778", features: ["Campagnes illimitées", "Veille médias algériens", "Analyse concurrentielle", "Support stratégique"], highlighted: false },
+      ],
+    },
+
     // Dashboard Common
     errLoadData: "Erreur lors du chargement des données.",
     noEnoughData: "Pas assez de données",
@@ -637,6 +731,53 @@ export const translations = {
     authSuccessSub: "Redirecting to dashboard...",
     authPwdStrength: ["", "Too short", "Weak", "Good", "Excellent"],
     authDemo: "Demo",
+
+    // Subscription Step
+    subTitle: "Choose your plan",
+    subSubtitle: "Offers tailored for you as a",
+    subSubtitleEnd: "— upgrade anytime",
+    subSelectedProfile: "Selected profile",
+    subChange: "Change",
+    subMonthly: "Monthly",
+    subAnnual: "Annual",
+    subSave: "Save 17%",
+    subAnnualNote: "💰 Annual billing saves you more",
+    subPopular: "Most popular",
+    subSelected: "Selected",
+    subSelectBtn: "Choose this plan",
+    subSelectedBtn: "Current plan",
+    subPerYear: "/ year",
+    subPerMonth: "/ month",
+    subEquiv: "That's",
+    subEquivEnd: "DZD / month",
+    subFree: "Free",
+    subBack: "Back",
+    subFinish: "Complete registration",
+    subChosenPlan: "Selected plan:",
+    subCurrency: "DZD",
+
+    subPlans: {
+      student: [
+        { id: "free", name: "Free", subtitle: "Get started", monthlyPrice: 0, annualPrice: 0, color: "#6b7280", features: ["Basic sentiment analysis", "10 mentions / month", "1 report / month"], highlighted: false },
+        { id: "student_pro", name: "Student Pro", subtitle: "Perfect for your research", monthlyPrice: 833, annualPrice: 10000, color: "#2d8bba", features: ["Unlimited sentiment analysis", "100 mentions / month", "Unlimited PDF reports", "Email support"], highlighted: true },
+        { id: "student_expert", name: "Student Expert", subtitle: "PhD & advanced research", monthlyPrice: 2083, annualPrice: 25000, color: "#22c778", features: ["All Pro features", "Algerian media database access", "Comparative reports", "Dedicated 24/7 support"], highlighted: false },
+      ],
+      professor: [
+        { id: "prof_basic", name: "Basic", subtitle: "Research & publications", monthlyPrice: 833, annualPrice: 10000, color: "#6b7280", features: ["Basic analysis", "50 mentions / month", "5 reports / month"], highlighted: false },
+        { id: "prof_pro", name: "Professional", subtitle: "For active researchers", monthlyPrice: 2083, annualPrice: 25000, color: "#2d8bba", features: ["Advanced AI analysis", "Unlimited mentions", "Research dashboard", "PDF & Excel export"], highlighted: true },
+        { id: "prof_expert", name: "Expert", subtitle: "Labs & research groups", monthlyPrice: 4167, annualPrice: 50000, color: "#22c778", features: ["All Professional features", "5 team accounts", "Cross-institution analysis", "API integration"], highlighted: false },
+      ],
+      manager: [
+        { id: "inst_basic", name: "Basic", subtitle: "Small institutions", monthlyPrice: 8333, annualPrice: 100000, color: "#6b7280", features: ["Reputation on 2 platforms", "Monthly reports", "3 team accounts", "Basic alerts"], highlighted: false },
+        { id: "inst_advanced", name: "Advanced", subtitle: "Medium institutions", monthlyPrice: 12500, annualPrice: 150000, color: "#2d8bba", features: ["All platforms", "Weekly reports", "10 team accounts", "Real-time crisis alerts", "Institution dashboard"], highlighted: true },
+        { id: "inst_pro", name: "Professional", subtitle: "Large & government institutions", monthlyPrice: 16667, annualPrice: 200000, color: "#22c778", features: ["Integrated crisis management", "Custom AI", "Unlimited accounts", "Daily reports", "Dedicated account manager"], highlighted: false },
+      ],
+      pr: [
+        { id: "pr_basic", name: "Starter", subtitle: "Manage one campaign", monthlyPrice: 833, annualPrice: 10000, color: "#6b7280", features: ["1 campaign", "Basic analysis", "5 reports / month"], highlighted: false },
+        { id: "pr_pro", name: "PR Professional", subtitle: "Day-to-day PR management", monthlyPrice: 2083, annualPrice: 25000, color: "#2d8bba", features: ["5 campaigns", "Advanced analysis & alerts", "Daily reports", "PR dashboard"], highlighted: true },
+        { id: "pr_expert", name: "Communication Expert", subtitle: "Full reputation management", monthlyPrice: 4167, annualPrice: 50000, color: "#22c778", features: ["Unlimited campaigns", "Algerian media monitoring", "Competitive analysis", "Strategic support"], highlighted: false },
+      ],
+    },
 
     // Dashboard Common
     errLoadData: "Error loading data.",
