@@ -84,7 +84,7 @@ export default function RegisterPage() {
         position: "relative",
         zIndex: 1,
       }}>
-        <div style={{ width: "100%", maxWidth: 560 }}>
+        <div style={{ width: "100%", maxWidth: step === 3 ? 1000 : 560, transition: "max-width 0.4s ease-in-out" }}>
 
           {/* Title */}
           <div style={{ textAlign: "center", marginBottom: 36 }}>
