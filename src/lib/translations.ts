@@ -105,6 +105,11 @@ export const translations = {
     authSuccessSub: "جاري التوجيه إلى لوحة القيادة...",
     authPwdStrength: ["", "قصير جداً", "ضعيف", "جيد", "ممتاز"],
     authDemo: "تجربة",
+    emailExistsTitle: "هذا البريد مسجّل مسبقاً!",
+    emailExistsDesc: "يبدو أن لديك حساباً موجوداً بالفعل. هل تريد تسجيل الدخول بدلاً من ذلك؟",
+    emailExistsBtn: "الذهاب إلى تسجيل الدخول",
+    emailExistsBtnBack: "تغيير البريد",
+    emailExistsEmail: "البريد المستخدم:",
 
     // Subscription Step
     subTitle: "اختر الباقة المناسبة لك",
@@ -418,6 +423,11 @@ export const translations = {
     authSuccessSub: "Redirection vers le tableau de bord...",
     authPwdStrength: ["", "Trop court", "Faible", "Bon", "Excellent"],
     authDemo: "Démo",
+    emailExistsTitle: "Cet email est déjà utilisé !",
+    emailExistsDesc: "Il semble que vous avez déjà un compte. Souhaitez-vous vous connecter à la place ?",
+    emailExistsBtn: "Aller à la connexion",
+    emailExistsBtnBack: "Utiliser un autre email",
+    emailExistsEmail: "Email utilisé :",
 
     // Subscription Step
     subTitle: "Choisissez votre formule",
@@ -731,6 +741,11 @@ export const translations = {
     authSuccessSub: "Redirecting to dashboard...",
     authPwdStrength: ["", "Too short", "Weak", "Good", "Excellent"],
     authDemo: "Demo",
+    emailExistsTitle: "This email is already registered!",
+    emailExistsDesc: "It looks like you already have an account. Would you like to sign in instead?",
+    emailExistsBtn: "Go to Sign In",
+    emailExistsBtnBack: "Use a different email",
+    emailExistsEmail: "Email used:",
 
     // Subscription Step
     subTitle: "Choose your plan",

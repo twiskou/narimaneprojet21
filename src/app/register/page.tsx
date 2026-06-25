@@ -29,6 +29,7 @@ export default function RegisterPage() {
   const [error, setError]             = useState("");
   const [loading, setLoading]         = useState(false);
   const [success, setSuccess]         = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
 
   const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }));
@@ -56,11 +57,16 @@ export default function RegisterPage() {
         body: JSON.stringify({ ...form, orgName: form.orgName || selectedRole, planId, isAnnual }),
       });
       const data = await res.json();
-      if (!res.ok) { setError(data.error || "حدث خطأ أثناء التسجيل."); setLoading(false); return; }
+      if (res.status === 409) {
+        setEmailExists(true);
+        setLoading(false);
+        return;
+      }
+      if (!res.ok) { setError(data.error || t.authRegisterTitle); setLoading(false); return; }
       setSuccess(true);
       setTimeout(() => router.push("/dashboard"), 1500);
     } catch {
-      setError("خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت.");
+      setError(t.authRegisterTitle);
       setLoading(false);
     }
   }
@@ -315,10 +321,136 @@ export default function RegisterPage() {
       {/* Shared Footer */}
       <AuthFooter />
 
+      {/* ── Email Already Exists Modal ── */}
+      {emailExists && (
+        <div
+          onClick={(e) => { if (e.target === e.currentTarget) setEmailExists(false); }}
+          style={{
+            position: "fixed", inset: 0, zIndex: 9999,
+            background: "rgba(0,0,0,0.55)",
+            backdropFilter: "blur(6px)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: 24,
+            animation: "fadeIn 0.2s ease",
+          }}
+        >
+          <div dir={dir} style={{
+            background: "#ffffff",
+            borderRadius: 28,
+            padding: "48px 40px",
+            maxWidth: 480,
+            width: "100%",
+            boxShadow: "0 32px 80px rgba(0,0,0,0.25)",
+            animation: "slideUp 0.3s ease",
+            position: "relative",
+            textAlign: "center",
+          }}>
+            {/* Close button */}
+            <button
+              onClick={() => setEmailExists(false)}
+              style={{
+                position: "absolute", top: 18, [dir === "rtl" ? "left" : "right"]: 18,
+                background: "#f3f4f6", border: "none", borderRadius: "50%",
+                width: 36, height: 36, cursor: "pointer", fontSize: 18,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#6b7280", transition: "background 0.2s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = "#e5e7eb")}
+              onMouseLeave={e => (e.currentTarget.style.background = "#f3f4f6")}
+            >
+              ×
+            </button>
+
+            {/* Icon */}
+            <div style={{
+              width: 80, height: 80, borderRadius: "50%",
+              background: "linear-gradient(135deg, #fef3c7, #fde68a)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 28px", fontSize: 36,
+              boxShadow: "0 8px 24px rgba(251,191,36,0.3)",
+            }}>
+              📧
+            </div>
+
+            {/* Title */}
+            <h2 style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", margin: "0 0 14px", letterSpacing: "-0.02em" }}>
+              {(t as typeof translations["AR"]).emailExistsTitle}
+            </h2>
+
+            {/* Description */}
+            <p style={{ fontSize: 15, color: "#64748b", margin: "0 0 20px", lineHeight: 1.7 }}>
+              {(t as typeof translations["AR"]).emailExistsDesc}
+            </p>
+
+            {/* Email chip */}
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              background: "#f0f9ff", border: "1.5px solid #bae6fd",
+              borderRadius: 100, padding: "8px 18px", marginBottom: 32,
+            }}>
+              <span style={{ fontSize: 13, color: "#64748b", fontWeight: 500 }}>
+                {(t as typeof translations["AR"]).emailExistsEmail}
+              </span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: "#0369a1" }}>
+                {form.email}
+              </span>
+            </div>
+
+            {/* Buttons */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <button
+                onClick={() => router.push("/login")}
+                style={{
+                  width: "100%", padding: "16px 24px", borderRadius: 16,
+                  background: "linear-gradient(135deg, #2d8bba, #22c778)",
+                  color: "#fff", fontSize: 16, fontWeight: 800, border: "none",
+                  cursor: "pointer", transition: "all 0.25s ease",
+                  boxShadow: "0 8px 24px rgba(34,199,120,0.35)",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+                }}
+                onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-2px)")}
+                onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+                {(t as typeof translations["AR"]).emailExistsBtn}
+              </button>
+
+              <button
+                onClick={() => {
+                  setEmailExists(false);
+                  setForm(f => ({ ...f, email: "" }));
+                  setStep(2);
+                }}
+                style={{
+                  width: "100%", padding: "14px 24px", borderRadius: 16,
+                  background: "transparent", color: "#64748b", fontSize: 15,
+                  fontWeight: 600, border: "1.5px solid #e2e8f0", cursor: "pointer",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.borderColor = "#cbd5e1"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "#e2e8f0"; }}
+              >
+                {(t as typeof translations["AR"]).emailExistsBtnBack}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
           to   { transform: rotate(360deg); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(24px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
         }
         @media (max-width: 480px) {
           div[style*="grid-template-columns: 1fr 1fr"] {
